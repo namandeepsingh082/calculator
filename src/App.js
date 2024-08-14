@@ -54,8 +54,17 @@ const App = () => {
       setInput(input.slice(0, -1));
     } else if (value === "=") {
       calculateResult(input);
+    } else if (value === '%') {
+      setInput((parseFloat(input) / 100).toString());
+    } else if (value === '.') {
+      const lastOperand = input.split(/[\+\-\*\/]/).pop();
+      if (!lastOperand.includes('.')) {
+        setInput(input + value);
+      }
     } else {
-      setInput((preValue) => preValue + value);
+      setInput((preValue) =>
+        preValue === "0" && value !== "." ? value : preValue + value
+      );
     }
   };
 
